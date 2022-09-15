@@ -10,7 +10,7 @@ export default class PostForm extends React.Component {
     }
     
     getPosts = async () => {
-        let response = await axios.get('http://localhost:3001/post')
+        let response = await axios.get('https://odat-posts-database.herokuapp.com/post')
         let postData = this.state.posts;
         console.log(response.data.post)
         return this.setState({posts: response})
