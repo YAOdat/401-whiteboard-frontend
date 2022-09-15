@@ -11,6 +11,7 @@ export default function AddPost() {
 
 // https://odat-posts-database.herokuapp.com
 // http://localhost:3001
+
     const getPosts = async (e) => {
         if (e) {
             e.preventDefault(e)
@@ -20,7 +21,6 @@ export default function AddPost() {
         setPosts(response[0].data.post)
         setShowPosts(true)
     }
-
 
     const addPost = async (e) => {
         e.preventDefault();
@@ -37,7 +37,6 @@ export default function AddPost() {
         getPosts();
 
     }
-
     const createComment = async (e) => {
         e.preventDefault();
         let newCommentPostID= e.target.postID.value;
@@ -48,7 +47,6 @@ export default function AddPost() {
         showPostComments(newCommentPostID)
 
     }
-
 
     const showPostComments = async (id) => {
 
