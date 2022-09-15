@@ -10,7 +10,7 @@ export default class Comment extends React.Component {
 
         const showPostComments = async (id) => {
 
-            let response = [await axios.get(`http://localhost:3001/post/${id}`)];
+            let response = [await axios.get(`https://odat-posts-database.herokuapp.com/post/${id}`)];
             console.log(response[0].data.CommentTables, 'new problem')
             let comments = response[0].data.CommentTables;
     

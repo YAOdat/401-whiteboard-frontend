@@ -9,12 +9,13 @@ export default function AddPost() {
     const [renderComments, setRenderComments] = useState([])
     const [postCommentID, setPostCommentID] = useState(0)
 
-
+// https://odat-posts-database.herokuapp.com
+// http://localhost:3001
     const getPosts = async (e) => {
         if (e) {
             e.preventDefault(e)
         }
-        let response = [await axios.get('http://localhost:3001/post')]
+        let response = [await axios.get('https://odat-posts-database.herokuapp.com/post')]
         console.log(response[0].data.post)
         setPosts(response[0].data.post)
         setShowPosts(true)
@@ -27,12 +28,12 @@ export default function AddPost() {
             postTitle: e.target.postTitle.value,
             postBody: e.target.postBody.value
         }
-        await axios.post('http://localhost:3001/post', postData);
+        await axios.post('https://odat-posts-database.herokuapp.com/post', postData);
         getPosts();
     }
 
     async function deletePost(id) {
-        await axios.delete(`http://localhost:3001/post/${id}`);
+        await axios.delete(`https://odat-posts-database.herokuapp.com/post/${id}`);
         getPosts();
 
     }
@@ -43,7 +44,7 @@ export default function AddPost() {
         console.log(newCommentPostID)
 
         let commentData = { commentBody: e.target[0].value, postID: newCommentPostID }
-        await axios.post(`http://localhost:3001/comment/${newCommentPostID}`, commentData)
+        await axios.post(`https://odat-posts-database.herokuapp.com/comment/${newCommentPostID}`, commentData)
         showPostComments(newCommentPostID)
 
     }
@@ -51,7 +52,7 @@ export default function AddPost() {
 
     const showPostComments = async (id) => {
 
-        let response = [await axios.get(`http://localhost:3001/post/${id}`)];
+        let response = [await axios.get(`https://odat-posts-database.herokuapp.com/post/${id}`)];
         let comments = response[0].data.CommentTables;
         let array = [];
 
@@ -77,7 +78,7 @@ export default function AddPost() {
 
 
             <form onSubmit={getPosts}>
-                <input type="submit" value="Get Posts" />
+                <input type="submit" value="Show All Posts" />
 
             </form>
 
@@ -87,7 +88,6 @@ export default function AddPost() {
                         <div key={idx} className='post-box'>
                             <h2>{post.postTitle}</h2>
                             <p>{post.postBody}</p>
-                            <p>{post.id}</p>
 
 
                             {/* <p>{console.log(post, 'posttt')}</p> */}
@@ -99,7 +99,7 @@ export default function AddPost() {
                                 renderComments.map((comment, idx) => {
                                     return (
                                         <div key={idx} className='post-box'>
-                                            <h3>Comments:</h3>
+                                            
                                             <p>{comment}</p>
 
                                         </div>
