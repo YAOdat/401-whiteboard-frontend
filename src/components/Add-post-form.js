@@ -46,10 +46,7 @@ export default function AddPost() {
         await axios.post(`http://localhost:3001/comment/${newCommentPostID}`, commentData)
         showPostComments(newCommentPostID)
 
-
-
     }
-
 
 
     const showPostComments = async (id) => {
@@ -57,9 +54,7 @@ export default function AddPost() {
         let response = [await axios.get(`http://localhost:3001/post/${id}`)];
         let comments = response[0].data.CommentTables;
         let array = [];
-        console.log(comments)
 
-        console.log(comments[0].postID, 'line 54')
         setPostCommentID(comments[0].postID)
         for (let i = 0; i < comments.length; i++) {
             if (comments[i].postID == id) {
@@ -69,19 +64,13 @@ export default function AddPost() {
 
         setRenderComments(array)
 
-
-
     }
-
 
     return (
         <div className="App">
             <form onSubmit={addPost}>
-                <label htmlFor="">Post Title: </label>
-                <input type="text" name='postTitle' />
-
-                <label htmlFor="">Post Body: </label>
-                <textarea type="text" name='postBody' />
+                <input type="text" name='postTitle' className="post-title" placeholder="Post Title"/>
+                <textarea type="text" name='postBody' className="post-title" placeholder="Type something..." />
 
                 <input type="submit" value="Add Post" />
             </form>
@@ -102,9 +91,10 @@ export default function AddPost() {
 
 
                             {/* <p>{console.log(post, 'posttt')}</p> */}
-                            <button onClick={() => deletePost(post.id)}> Delete Post </button>
-                            <button onClick={() => showPostComments(post.id)}> Show Comments </button>
-
+                            <div className="buttons-carrier"> 
+                            <button onClick={() => deletePost(post.id)} className='secondary-buttons'> Delete Post </button>
+                            <button onClick={() => showPostComments(post.id)} className='secondary-buttons'> Show Comments </button>
+                            </div>
                             { post.id == postCommentID &&
                                 renderComments.map((comment, idx) => {
                                     return (
@@ -121,7 +111,7 @@ export default function AddPost() {
                             <form onSubmit={createComment} >
                                 <textarea type='text' name="comment" />
                                 <input value={post.id} hidden name= 'postID' />
-                                <button type="submit"> Add a comment</button>
+                                <button type="submit" className="comment-button"> Add a comment</button>
                             </form>
                         </div>
 
@@ -135,6 +125,3 @@ export default function AddPost() {
 }
 
 
-
-// {renderComments.map((comment, idx)
-//     return( <p>{comment.commentBody}</p>) )}
