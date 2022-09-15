@@ -7,7 +7,7 @@ export default function AddPost() {
     const [posts, setPosts] = useState([])
     const [showPosts, setShowPosts] = useState(false)
     const [renderComments, setRenderComments] = useState([])
-
+    const [postCommentID, setPostCommentID] = useState(0)
 
 
     const getPosts = async (e) => {
@@ -37,50 +37,38 @@ export default function AddPost() {
 
     }
 
-    const createComment = async (id, e) => {
+    const createComment = async (e) => {
         e.preventDefault();
-        let commentData = { commentBody: e.target[0].value, postID: id }
-        await axios.post(`http://localhost:3001/comment/${id}`, commentData)
-        console.log(commentData)
-        // showComments()
+        let newCommentPostID= e.target.postID.value;
+        console.log(newCommentPostID)
+
+        let commentData = { commentBody: e.target[0].value, postID: newCommentPostID }
+        await axios.post(`http://localhost:3001/comment/${newCommentPostID}`, commentData)
+        showPostComments(newCommentPostID)
+
 
 
     }
 
 
-    // const showComments = async (id) => {
-
-    //     let response = await axios.get(`http://localhost:3001/comment/`);
-    //     let comments = response.data.comment;
-
-    //     console.log(comments[1].postID, 'line 54')
-
-    //     for (let i = 0; i < comments.length; i++) {
-    //         if (comments[i].postID == id) {
-    //             // console.log(comments[i].commentBody)
-    //         }
-    //     }
-
-    //     setRenderComments(comments)
-
-    // }
 
     const showPostComments = async (id) => {
 
         let response = [await axios.get(`http://localhost:3001/post/${id}`)];
-        console.log(response[0].data.CommentTables, 'new problem')
         let comments = response[0].data.CommentTables;
-
+        let array = [];
+        console.log(comments)
 
         console.log(comments[0].postID, 'line 54')
-
+        setPostCommentID(comments[0].postID)
         for (let i = 0; i < comments.length; i++) {
             if (comments[i].postID == id) {
-                console.log(comments[i].commentBody, 'from for loop')
-                setRenderComments(response)
-                console.log(renderComments, 'render')
+                array.push(comments[i].commentBody)
             }
         }
+
+        setRenderComments(array)
+
 
 
     }
@@ -116,12 +104,13 @@ export default function AddPost() {
                             {/* <p>{console.log(post, 'posttt')}</p> */}
                             <button onClick={() => deletePost(post.id)}> Delete Post </button>
                             <button onClick={() => showPostComments(post.id)}> Show Comments </button>
-                            { post.id == renderComments.postID &&
+
+                            { post.id == postCommentID &&
                                 renderComments.map((comment, idx) => {
                                     return (
                                         <div key={idx} className='post-box'>
                                             <h3>Comments:</h3>
-                                            <p>{comment.commentBody}</p>
+                                            <p>{comment}</p>
 
                                         </div>
 
@@ -129,8 +118,9 @@ export default function AddPost() {
                                 })
                             }
 
-                            <form onSubmit={() => createComment(post.id)}>
+                            <form onSubmit={createComment} >
                                 <textarea type='text' name="comment" />
+                                <input value={post.id} hidden name= 'postID' />
                                 <button type="submit"> Add a comment</button>
                             </form>
                         </div>
