@@ -1,14 +1,17 @@
 import './App.css';
 import PostForm from './components/Add-post-form'
-import PostTest from './components/class-form'
+import SignIn from './components/Signin'
+import SignUp from './components/Signup';
 
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1> Pomment, Where You Post and Comment </h1>
-      <PostForm />
+        <h1> <span id='Pomment'> Pomment </span>, Where You Post and Comment</h1>
+        <SignIn/>
+        
+  
       </header>
     </div>
   );
