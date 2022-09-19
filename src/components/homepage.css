@@ -55,3 +55,16 @@
     font-size: 25px;
 }
 
+
+.sign-out-button {
+    border: none;
+    background-color: #CC4949;
+    width: 110px;
+    padding: 2%;
+    color: white;
+    border-radius: 6px;
+}
+
+.sign-out-button:hover {
+    background-color: #ad1a1f;
+}
