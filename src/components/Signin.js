@@ -71,7 +71,7 @@ const [wrongInputsMessage, setWrongInputsMessage] = useState(false)
         </When>  
 
         <When condition={auth}>
-        <button onClick={signOut}> Sign Out </button>
+        <button onClick={signOut} className='sign-out-button'> Sign Out </button>
         <PostForm />
 
         </When>  
