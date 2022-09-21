@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import base64 from 'base-64';
 import { When } from 'react-if';
 import  PostForm from './Add-post-form'
 import SignUp from './Signup'
+import cookies from 'react-cookies';
 import './homepage.css'
 
 export default function SignIn() {
@@ -33,6 +34,12 @@ const [wrongInputsMessage, setWrongInputsMessage] = useState(false)
       }
     })
       .then(res => {
+        console.log(res.data.id);
+        cookies.save('token', res.data.token);
+        cookies.save('username', res.data.userName);
+        cookies.save('userID', res.data.id);
+        console.log( cookies.load('token') != '');
+
         setAuth(true)
       })
       .catch(err =>  {
@@ -46,10 +53,16 @@ const [wrongInputsMessage, setWrongInputsMessage] = useState(false)
 
 
   const signOut =  () => {
+    cookies.remove('token')
     window.location.reload(false);
   }
 
-   
+    useEffect(()=> {
+      const token = cookies.load('token')
+      if(token) {
+        setAuth(true)
+      }
+    }, [])
 
     return (
         <div>

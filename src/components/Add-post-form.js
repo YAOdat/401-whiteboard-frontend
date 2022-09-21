@@ -3,11 +3,14 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Posts from './Post'
 import './posts.css'
+import cookies from 'react-cookies'
+
 export default function AddPost() {
     const [posts, setPosts] = useState([])
     const [showPosts, setShowPosts] = useState(false)
     const [renderComments, setRenderComments] = useState([])
     const [postCommentID, setPostCommentID] = useState(0)
+    const [postsCounter, setPostsCounter] =useState(0)
 
 // https://odat-posts-database.herokuapp.com
 // http://localhost:3001
@@ -26,8 +29,11 @@ export default function AddPost() {
         e.preventDefault();
         const postData = {
             postTitle: e.target.postTitle.value,
-            postBody: e.target.postBody.value
+            postBody: e.target.postBody.value,
+            userName: cookies.load('username'),
+            userID: cookies.load('userID')
         }
+        setPostsCounter(postsCounter+1)
         await axios.post('https://odat-posts-database.herokuapp.com/post', postData);
         getPosts();
     }
@@ -35,6 +41,7 @@ export default function AddPost() {
     async function deletePost(id) {
         await axios.delete(`https://odat-posts-database.herokuapp.com/post/${id}`);
         getPosts();
+        setPostsCounter(postsCounter-1)
 
     }
     const createComment = async (e) => {
@@ -64,6 +71,9 @@ export default function AddPost() {
         setRenderComments(array)
 
     }
+       
+    cookies.load('username')
+    
 
     return (
         <div className="App">
@@ -86,8 +96,8 @@ export default function AddPost() {
                         <div key={idx} className='post-box'>
                             <h2>{post.postTitle}</h2>
                             <p>{post.postBody}</p>
-
-
+                            <p>{`Posted by ${post.userName}`}</p>
+                            
                             {/* <p>{console.log(post, 'posttt')}</p> */}
                             <div className="buttons-carrier"> 
                             <button onClick={() => deletePost(post.id)} className='secondary-buttons'> Delete Post </button>
