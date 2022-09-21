@@ -58,6 +58,7 @@ export default function AddPost() {
     const showPostComments = async (id) => {
 
         let response = [await axios.get(`https://odat-posts-database.herokuapp.com/post/${id}`)];
+        console.log(response)
         let comments = response[0].data.CommentTables;
         let array = [];
 

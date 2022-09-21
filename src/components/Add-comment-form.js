@@ -30,11 +30,6 @@ export default class Comment extends React.Component {
         }
     }
 
-
-    
-
-
-
     render () {
         <div>
             <button onClick={showPostComments}> Show comments </button>
