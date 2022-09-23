@@ -23,6 +23,7 @@ export default function AddPost() {
         console.log(response[0].data.post)
         setPosts(response[0].data.post)
         setShowPosts(true)
+
     }
 
     const addPost = async (e) => {
@@ -58,17 +59,14 @@ export default function AddPost() {
     const showPostComments = async (id) => {
 
         let response = [await axios.get(`https://odat-posts-database.herokuapp.com/post/${id}`)];
-        console.log(response)
-        let comments = response[0].data.CommentTables;
+        let comments = response[0].data.CommentsTables;
         let array = [];
-
         setPostCommentID(comments[0].postID)
         for (let i = 0; i < comments.length; i++) {
             if (comments[i].postID == id) {
                 array.push(comments[i].commentBody)
             }
         }
-
         setRenderComments(array)
 
     }
@@ -97,6 +95,7 @@ export default function AddPost() {
                         <div key={idx} className='post-box'>
                             <h2>{post.postTitle}</h2>
                             <p>{post.postBody}</p>
+                            <p>{ post.id}</p>
                             <p>{`Posted by ${post.userName}`}</p>
                             
                             {/* <p>{console.log(post, 'posttt')}</p> */}
