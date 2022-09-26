@@ -11,18 +11,27 @@ export default function AddPost() {
     const [renderComments, setRenderComments] = useState([])
     const [postCommentID, setPostCommentID] = useState(0)
     const [postsCounter, setPostsCounter] =useState(0)
+    const [adminDetector, setAdminDetector] = useState(false)
 
 // https://odat-posts-database.herokuapp.com
 // http://localhost:3001
+
+        const userData = cookies.load('userData')
+        console.log(userData.role)
+
 
     const getPosts = async (e) => {
         if (e) {
             e.preventDefault(e)
         }
         let response = [await axios.get('https://odat-posts-database.herokuapp.com/post')]
-        console.log(response[0].data.post)
         setPosts(response[0].data.post)
+        const userData = cookies.load('userData')
+        if(userData.role == 'admin') {
+            setAdminDetector(true)
+        }
         setShowPosts(true)
+
 
     }
 
@@ -40,7 +49,15 @@ export default function AddPost() {
     }
 
     async function deletePost(id) {
-        await axios.delete(`https://odat-posts-database.herokuapp.com/post/${id}`);
+        const token = cookies.load('token')
+        const role = cookies.load('userData')
+
+
+        await axios.delete(`https://odat-posts-database.herokuapp.com/post/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+              }
+        });
         getPosts();
         setPostsCounter(postsCounter-1)
 
@@ -71,7 +88,8 @@ export default function AddPost() {
 
     }
        
-    cookies.load('username')
+    cookies.load('username');
+   
     
 
     return (
@@ -95,12 +113,12 @@ export default function AddPost() {
                         <div key={idx} className='post-box'>
                             <h2>{post.postTitle}</h2>
                             <p>{post.postBody}</p>
-                            <p>{ post.id}</p>
                             <p>{`Posted by ${post.userName}`}</p>
                             
                             {/* <p>{console.log(post, 'posttt')}</p> */}
                             <div className="buttons-carrier"> 
-                            <button onClick={() => deletePost(post.id)} className='secondary-buttons'> Delete Post </button>
+                            { adminDetector && 
+                            <button onClick={() => deletePost(post.id)} className='secondary-buttons'> Delete Post </button> }
                             <button onClick={() => showPostComments(post.id)} className='secondary-buttons'> Show Comments </button>
                             </div>
                             { post.id == postCommentID &&

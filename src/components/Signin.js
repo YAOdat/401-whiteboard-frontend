@@ -35,6 +35,7 @@ const [wrongInputsMessage, setWrongInputsMessage] = useState(false)
     })
       .then(res => {
         console.log(res.data.id);
+        cookies.save('userData', res.data)
         cookies.save('token', res.data.token);
         cookies.save('username', res.data.userName);
         cookies.save('userID', res.data.id);
