@@ -29,7 +29,7 @@ export default function SignUp() {
              <When condition={!registered}>
 
              <div className='login-box'>  
-        <form onSubmit={handleSignUp}>
+        <form onSubmit={handleSignUp}  id= 'register-form'>
         <input type='username' name='username' className='login-box-inputs' placeholder='Username'/> 
         <br/>
         <input type='email' name='email' className='login-box-inputs' placeholder='Example@email.com'/> 
