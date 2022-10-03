@@ -1,11 +1,15 @@
 import axios from 'axios';
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, createContext} from 'react'
 import base64 from 'base-64';
 import { When } from 'react-if';
 import  PostForm from './Add-post-form'
 import SignUp from './Signup'
 import cookies from 'react-cookies';
+import  { OutButtonContext } from '../App';
 import './homepage.css'
+
+export const userAuth = createContext();
+
 
 export default function SignIn() {
 
@@ -28,7 +32,7 @@ const [wrongInputsMessage, setWrongInputsMessage] = useState(false)
         
     const encodedCredintial = base64.encode(`${data.email}:${data.password}`);
      console.log(`Basic ${encodedCredintial}`)
-    axios.post('https://odat-posts-database.herokuapp.com/signin', {}, {
+    axios.post('http://localhost:3001/signin', {}, {
       headers: {
         Authorization: `Basic ${encodedCredintial}`
       }
@@ -39,7 +43,8 @@ const [wrongInputsMessage, setWrongInputsMessage] = useState(false)
         cookies.save('token', res.data.token);
         cookies.save('username', res.data.userName);
         cookies.save('userID', res.data.id);
-        console.log( cookies.load('token') != '');
+        window.location.reload(false);
+
 
         setAuth(true)
       })
@@ -55,6 +60,8 @@ const [wrongInputsMessage, setWrongInputsMessage] = useState(false)
 
   const signOut =  () => {
     cookies.remove('token')
+    cookies.remove('username')
+
     window.location.reload(false);
   }
 
@@ -90,7 +97,19 @@ const [wrongInputsMessage, setWrongInputsMessage] = useState(false)
 
         </When>  
 
+        <OutButtonContext.Consumer>
+          {
+            (signOutButtonValue) => {
+              if(signOutButtonValue.signOutButton === true) {
+              signOut()
+             
+            }
+          }}
+        </OutButtonContext.Consumer>
+
         
+
+
         </div>
 
     )

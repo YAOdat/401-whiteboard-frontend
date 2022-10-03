@@ -1,9 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Carter+One&display=swap');
+
 #Pomment{
   color: #61dafb;
+  font-family: 'Carter One', cursive;
+
 }
 
 .App {
   text-align: center;
+  
 }
 
 .App-logo {
@@ -32,11 +37,83 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav-title{
+  font-family: 'Carter One', cursive;
+  position: relative;
+  right: 10%;
+}
+
+.nav-links {
+  margin-right:10%;
+}
+
+.nav {
+  height: 50px;
+  width: 100%;
+  background-color: #61dafb77;
+  position: relative;
+}
+
+.nav > .nav-header {
+  display: inline;
+}
+
+.nav > .nav-header > .nav-title {
+  display: inline-block;
+  font-size: 22px;
+  color: #fff;
+  padding: 10px 10px 10px 10px;
+}
+
+.nav > .nav-btn {
+  display: none;
+}
+
+.nav > .nav-links {
+  display: inline;
+  float: right;
+  font-size: 18px;
+}
+
+.nav > .nav-links > a {
+  display: inline-block;
+  padding: 13px 10px 13px 10px;
+  text-decoration: none;
+  color: #efefef;
+}
+
+
+.nav > #nav-check {
+  display: none;
+}
+
+@media (min-width:900px) {
+ .nav-title {
+  
+  transition: margin 1s ease-in-out;
+}
+.nav-links {
+  
+  transition: margin 1s ease-in-out;
+  }}
+
+@media (max-width:900px) {
+  .nav-title {
+  margin-left:1em;
+  transition: margin 1s ease-in-out;
+}
+.nav-links {
+  margin-right:1em;
+  transition: margin 1s ease-in-out;
+}
+}
+
+
+.welcome-message {
+  color: white;
+  padding: 9px;
+}
+
+.home-button:hover {
+  background-color: rgba(0, 255, 255, 0.11);
 }
