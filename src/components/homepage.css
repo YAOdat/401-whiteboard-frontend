@@ -63,8 +63,25 @@
     padding: 2%;
     color: white;
     border-radius: 6px;
+
+}
+
+.sign-out-button span{
+    border: none;
+    background-color: #CC4949;
+    width: 110px;
+    padding: 2%;
+    color: white;
+    border-radius: 6px;
+    display: none;
+
 }
 
 .sign-out-button:hover {
     background-color: #ad1a1f;
+   
+}
+
+.sign-out-button:hover:before {
+    content: '😭😭';
 }
