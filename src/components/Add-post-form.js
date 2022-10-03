@@ -27,7 +27,7 @@ export default function AddPost() {
         if (e) {
             e.preventDefault(e)
         }
-        let response = [await axios.get('http://localhost:3001/post')]
+        let response = [await axios.get('https://odat-posts-database.herokuapp.com/post')]
         setPosts(response[0].data.post)
         const userData = cookies.load('userData')
         if (userData.role == 'admin') {
@@ -47,14 +47,15 @@ export default function AddPost() {
             userID: cookies.load('userID')
         }
         setPostsCounter(postsCounter + 1)
-        await axios.post('http://localhost:3001/post', postData);
+        await axios.post('https://odat-posts-database.herokuapp.com/post', postData);
         getPosts();
     }
 
 
     const updatePost = async (e) => {
         e.preventDefault();
-        if(e.target.value === cookies.load('username')){
+        console.log(e.target[3].value)
+        if(e.target[3].value === cookies.load('username')){
 
         let id = e.target.postID.value;
         const postData = {
@@ -63,8 +64,10 @@ export default function AddPost() {
             userName: cookies.load('username'),
             userID: cookies.load('userID')
         }
-        await axios.put(`http://localhost:3001/post/${id}`, postData);
+        await axios.put(`https://odat-posts-database.herokuapp.com/post/${id}`, postData);
         setShowEditForm(false)
+        getPosts();
+
     } else {
         Swal.fire({
             icon: 'error',
@@ -112,7 +115,7 @@ export default function AddPost() {
         const role = cookies.load('userData')
 
 
-        await axios.delete(`http://localhost:3001/post/${id}`, {
+        await axios.delete(`https://odat-posts-database.herokuapp.com/post/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -127,14 +130,14 @@ export default function AddPost() {
         console.log(newCommentPostID)
 
         let commentData = { commentBody: e.target[0].value, postID: newCommentPostID }
-        await axios.post(`http://localhost:3001/comment/${newCommentPostID}`, commentData)
+        await axios.post(`https://odat-posts-database.herokuapp.com/comment/${newCommentPostID}`, commentData)
         showPostComments(newCommentPostID)
 
     }
 
     const showPostComments = async (id) => {
 
-        let response = [await axios.get(`http://localhost:3001/post/${id}`)];
+        let response = [await axios.get(`https://odat-posts-database.herokuapp.com/post/${id}`)];
         let comments = response[0].data.CommentsTables;
         let array = [];
         setPostCommentID(comments[0].postID)
@@ -185,6 +188,7 @@ export default function AddPost() {
                                         <input value={post.id} hidden name='postID' />
                                         <input type="text" name='postTitle' className="post-title" placeholder="New Post Title" />
                                         <textarea type="text" name='postBody' className="post-title" placeholder="Type something..." />
+                                        <input value={post.userName} hidden name='author' />
                                         <button> Update! </button>
                                     </form>
                                 }

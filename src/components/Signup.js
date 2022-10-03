@@ -16,7 +16,7 @@ export default function SignUp() {
         };
         // https://odat-posts-database.herokuapp.com/
         // http://localhost:3001/signup
-        await axios.post('http://localhost:3001/signup', data).then(res => {
+        await axios.post('https://odat-posts-database.herokuapp.com/signup', data).then(res => {
             console.log(res.statusText);
             if(res.statusText === 'Created') {
                 setRegistered(true)
