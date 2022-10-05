@@ -5,7 +5,7 @@ import './posts.css'
 
 
 export default function AddPost() {
-    const {getPosts, addPost, updatePost, deletePost, editButton, createComment, showPostComments, posts, setPosts, showPosts, setShowPosts, renderComments, setRenderComments, postCommentID, setPostCommentID, postsCounter, setPostsCounter, adminDetector, setAdminDetector, showEditForm, setShowEditForm} = useContext(postContext)
+    const {getPosts, addPost, updatePost, deletePost, editButton, createComment, showPostComments, posts, setPosts, showPosts, setShowPosts, renderComments, setRenderComments, postCommentID, setPostCommentID, postsCounter, setPostsCounter, adminDetector, setAdminDetector, showEditForm, setShowEditForm, canDo} = useContext(postContext)
 
     // https://odat-posts-database.herokuapp.com
     // http://localhost:3001
@@ -71,6 +71,8 @@ export default function AddPost() {
                                 <input value={post.id} hidden name='postID' />
                                 <button type="submit" className="comment-button"> Add a comment</button>
                             </form>
+
+
                         </div>
 
                     )
