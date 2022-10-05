@@ -1,10 +1,7 @@
-import axios from 'axios';
-import React, {useEffect, useState, createContext, useContext} from 'react'
-import base64 from 'base-64';
+import React, { useState, createContext, useContext} from 'react'
 import { When } from 'react-if';
 import  PostForm from './Add-post-form'
 import SignUp from './Signup'
-import cookies from 'react-cookies';
 import  { OutButtonContext } from '../App';
 import {authContext} from '../Context/AuthContext'
 import './homepage.css'
