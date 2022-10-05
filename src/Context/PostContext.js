@@ -17,7 +17,6 @@ const PostContextProvider = (props) => {
 
     
     const userData = cookies.load('userData')
-    console.log(userData.role)
 
 
     const getPosts = async (e) => {
@@ -121,7 +120,6 @@ const PostContextProvider = (props) => {
     const createComment = async (e) => {
         e.preventDefault();
         let newCommentPostID = e.target.postID.value;
-        console.log(newCommentPostID)
 
         let commentData = { commentBody: e.target[0].value, postID: newCommentPostID }
         await axios.post(`https://odat-posts-database.herokuapp.com/comment/${newCommentPostID}`, commentData)
@@ -144,16 +142,22 @@ const PostContextProvider = (props) => {
 
     }
 
-    cookies.load('username');
+
+    let username = cookies.load('username');
+
+    function canDo (username)   {
+       let userAbilities = cookies.load('userData')
+       console.log(userAbilities.capabilities)
+    }
 
 
-    const stuff = { getPosts, addPost, updatePost, deletePost, editButton, createComment, showPostComments, posts, setPosts, showPosts, setShowPosts, renderComments, setRenderComments, postCommentID, setPostCommentID, postsCounter, setPostsCounter, adminDetector, setAdminDetector, showEditForm, setShowEditForm }
+
+    const stuff = { getPosts, addPost, updatePost, deletePost, editButton, createComment, showPostComments, posts, setPosts, showPosts, setShowPosts, renderComments, setRenderComments, postCommentID, setPostCommentID, postsCounter, setPostsCounter, adminDetector, setAdminDetector, showEditForm, setShowEditForm, canDo }
 
 
     return (
 
         <postContext.Provider value={stuff}>
-
         {props.children}
         </postContext.Provider>
 
