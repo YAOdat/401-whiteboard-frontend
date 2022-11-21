@@ -1,69 +1,20 @@
-import axios from 'axios';
-import React, {useEffect, useState} from 'react'
-import base64 from 'base-64';
+import React, { useState, createContext, useContext} from 'react'
 import { When } from 'react-if';
 import  PostForm from './Add-post-form'
 import SignUp from './Signup'
-import cookies from 'react-cookies';
+import  { OutButtonContext } from '../App';
+import {authContext} from '../Context/AuthContext'
 import './homepage.css'
+
+export const userAuth = createContext();
 
 export default function SignIn() {
 
-const [auth, setAuth] = useState(false)
+const {handleSignIn, auth, setAuth, signOut} = useContext(authContext)
+
 const [wrongInputsMessage, setWrongInputsMessage] = useState(false)
 
 
-    const handleSignIn = async (e) => {
-        e.preventDefault();
-        if(e.target.password.value === ''){
-            setWrongInputsMessage(true)
-            return 0;
-        }
-        console.log(e.target.password.value)
-        const data = {
-            'email': e.target.email.value,
-            'password': e.target.password.value
-        };
-
-        
-    const encodedCredintial = base64.encode(`${data.email}:${data.password}`);
-     console.log(`Basic ${encodedCredintial}`)
-    axios.post('https://odat-posts-database.herokuapp.com/signin', {}, {
-      headers: {
-        Authorization: `Basic ${encodedCredintial}`
-      }
-    })
-      .then(res => {
-        console.log(res.data.id);
-        cookies.save('userData', res.data)
-        cookies.save('token', res.data.token);
-        cookies.save('username', res.data.userName);
-        cookies.save('userID', res.data.id);
-        console.log( cookies.load('token') != '');
-
-        setAuth(true)
-      })
-      .catch(err =>  {
-        if(err.response.data == 'You are not authorized') {
-            setWrongInputsMessage(true)
-        } else {
-            console.log(err.response.data);
-        }
-    })
-  }
-
-
-  const signOut =  () => {
-    cookies.remove('token')
-    window.location.reload(false);
-  }
-
-    useEffect(()=> {
-      const token = cookies.load('token')
-      if(token) {
-        setAuth(true)
-      }
-    }, [])
 
     return (
         <div>
@@ -90,7 +41,19 @@ const [wrongInputsMessage, setWrongInputsMessage] = useState(false)
 
         </When>  
 
+        <OutButtonContext.Consumer>
+          {
+            (signOutButtonValue) => {
+              if(signOutButtonValue.signOutButton === true) {
+              signOut()
+             
+            }
+          }}
+        </OutButtonContext.Consumer>
+
         
+
+
         </div>
 
     )
