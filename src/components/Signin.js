@@ -5,6 +5,8 @@ import SignUp from './Signup'
 import  { OutButtonContext } from '../App';
 import {authContext} from '../Context/AuthContext'
 import './homepage.css'
+import { useDispatch } from 'react-redux';
+import { handleSignIn } from '../features/signInSlicer';
 
 export const userAuth = createContext();
 
@@ -13,6 +15,7 @@ export default function SignIn() {
 const {handleSignIn, auth, setAuth, signOut} = useContext(authContext)
 
 const [wrongInputsMessage, setWrongInputsMessage] = useState(false)
+const dispatch = useDispatch();
 
 
 

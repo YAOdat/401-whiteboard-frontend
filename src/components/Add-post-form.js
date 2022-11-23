@@ -14,11 +14,7 @@ export default function AddPost() {
     const [postsCounter, setPostsCounter] = useState(0)
     const [adminDetector, setAdminDetector] = useState(false)
 
-    // https://odat-posts-database.herokuapp.com
-    // http://localhost:3001
-
     const dispatch = useDispatch();
-
 
     const userData = cookies.load('userData')
     console.log(userData.role)
@@ -69,7 +65,6 @@ export default function AddPost() {
     const createComment = async (e) => {
         e.preventDefault();
         let newCommentPostID = e.target.postID.value;
-        console.log(newCommentPostID)
 
         let commentData = { commentBody: e.target[0].value, postID: newCommentPostID }
         await axios.post(`https://odat-posts-database.herokuapp.com/comment/${newCommentPostID}`, commentData)
