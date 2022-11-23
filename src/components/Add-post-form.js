@@ -69,7 +69,6 @@ export default function AddPost() {
     const createComment = async (e) => {
         e.preventDefault();
         let newCommentPostID = e.target.postID.value;
-        console.log(newCommentPostID)
 
         let commentData = { commentBody: e.target[0].value, postID: newCommentPostID }
         await axios.post(`https://odat-posts-database.herokuapp.com/comment/${newCommentPostID}`, commentData)

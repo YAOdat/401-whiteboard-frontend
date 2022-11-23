@@ -7,11 +7,10 @@ import {createSlice} from '@reduxjs/toolkit';
     },
     reducers: {
         getPosts : (state, action) => {
-            // get posts from the server
-            state.posts = action.payload
+
+            state.posts = action.payload;
             
-            console.log(action)
-            state.posts = action.payload
+            
         }
 
     }

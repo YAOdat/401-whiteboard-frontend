@@ -6,11 +6,14 @@ import  PostForm from './Add-post-form'
 import SignUp from './Signup'
 import cookies from 'react-cookies';
 import './homepage.css'
+import { useDispatch } from 'react-redux';
+import { handleSignIn } from '../features/signInSlicer';
 
 export default function SignIn() {
 
 const [auth, setAuth] = useState(false)
 const [wrongInputsMessage, setWrongInputsMessage] = useState(false)
+const dispatch = useDispatch();
 
 
     const handleSignIn = async (e) => {

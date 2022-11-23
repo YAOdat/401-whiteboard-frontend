@@ -2,9 +2,17 @@ import React, {useState} from 'react';
 import { When } from 'react-if';
 import axios from 'axios';
 import './homepage.css'
+import { useDispatch } from 'react-redux';
+import { handleSignUp } from '../features/signUpSlicer';
 
 export default function SignUp() {
+
     const [registered, setRegistered] = useState(false)
+    const dispatch = useDispatch();
+
+
+
+
     const handleSignUp = async (e) => {
         e.preventDefault();
         console.log(e.target.username.value)
@@ -23,6 +31,9 @@ export default function SignUp() {
             }
           }).catch(e => console.log(e))
     }
+
+    dispatch(handleSignUp)
+
 
     return (
         <div>
