@@ -14,11 +14,7 @@ export default function AddPost() {
     const [postsCounter, setPostsCounter] = useState(0)
     const [adminDetector, setAdminDetector] = useState(false)
 
-    // https://odat-posts-database.herokuapp.com
-    // http://localhost:3001
-
     const dispatch = useDispatch();
-
 
     const userData = cookies.load('userData')
     console.log(userData.role)
